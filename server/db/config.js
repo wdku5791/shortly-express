@@ -22,6 +22,15 @@ module.exports = function(db) {
       linkId INT,\
       timestamp TIMESTAMP\
       );');
+  }).then(function() {
+    // Create users table
+    return db.queryAsync('CREATE TABLE IF NOT EXISTS users (\
+      id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,\
+      username VARCHAR(25),\
+      password VARCHAR(25),\
+      timestamp TIMESTAMP,\
+      unique (username) \
+      );');
   })
   /************************************************************/
   /*          Add additional schema queries here              */

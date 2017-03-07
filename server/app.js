@@ -81,10 +81,55 @@ function(req, res, next) {
     res.status(200).send(link);
   });
 });
-
 /************************************************************/
 // Write your authentication routes here
 /************************************************************/
+app.post('/signup', function (req, res, next) {
+
+  Users.addUser(req.body, function (err, results) {
+    if (err) {
+      console.log(err);
+      res.redirect('/signup');
+    } else {
+      res.status(201);
+      res.redirect('/');
+    }
+
+  });
+});
+
+app.post('/login', function (req, res, next) {
+  Users.checkForUser(req.body, function (err, results) {
+    
+    if (err) {
+      console.log(err);
+    } else {
+      res.status(201);
+      if (results) {
+        res.redirect('/');
+      } else {
+        res.redirect('/login');
+      }
+    }
+  });
+
+
+  // Users.checkForUser(req.body, function(err, results) {
+  //   // console.log('--------resykts--------', results);
+  //   if (err) {
+  //     console.log(err);
+  //   } else {
+  //       // console.log('-------REACHED-------------');
+  //     res.status(201);
+  //     if (results.length > 0) {
+  //       res.redirect('/');
+  //     } else {
+  //       res.redirect('/login');
+  //     }
+  //   }
+  //   res.redirect('/');
+  // });
+});
 
 
 
