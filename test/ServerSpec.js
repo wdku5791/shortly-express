@@ -47,7 +47,7 @@ describe('', function() {
     /**************************************************************************************/
     /* TODO: If you create a new MySQL tables, add it to the tablenames collection below. */
     /**************************************************************************************/
-    var tablenames = ['links', 'clicks', 'users'
+    var tablenames = ['links', 'clicks', 'users', 'sessions'
 ];
 
     db.connect(function(err) {
@@ -280,7 +280,7 @@ describe('', function() {
     });
   });
 
-  xdescribe('Sessions Schema:', function() {
+  describe('Sessions Schema:', function() {
     it('contains a sessions table', function(done) {
       var queryString = 'SELECT * FROM sessions';
       db.query(queryString, function(err, results) {
@@ -329,7 +329,7 @@ describe('', function() {
     });
   });
 
-  xdescribe('Express Middleware', function() {
+  describe('Express Middleware', function() {
     var cookieParser = require('../server/middleware/cookieParser.js');
     var sessionParser = require('../server/middleware/sessionParser.js');
 
@@ -351,7 +351,9 @@ describe('', function() {
         var response = httpMocks.createResponse();
 
         cookieParser(requestWithoutCookies, response, function() {
+          // console.log('-------------', request.headers, '--------------');
           var cookies = requestWithoutCookies.cookies;
+          console.log('---------------', cookies, '------');
           expect(cookies).to.be.an('object');
           expect(cookies).to.eql({});
         });
@@ -374,7 +376,7 @@ describe('', function() {
       });
     });
 
-    describe('Session Parser', function() {
+    xdescribe('Session Parser', function() {
       it('initializes a new session when there are no cookies on the request', function() {
         var requestWithoutCookies = httpMocks.createRequest();
         var response = httpMocks.createResponse();

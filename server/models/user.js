@@ -20,11 +20,15 @@ var checkForUser = function (user, callback) {
   // var queryString = 'select * from users where username = "' + user.username + '"';
   var queryString = 'SELECT * FROM users where username = ?';  
   db.query(queryString, [user.username], function(err, results) {
-  
+
+    // console.log('------------', user.password, '-------------------');
+    utils.passwordHash(user);
+    // console.log('------------', user.password, '-------------------');
+    // var tempPassword = JSON.stringify(results[0].password);
     if (err) {
       callback(err, null);
     } else {
-      if (results.length > 0) {
+      if (results.length > 0 && user.password === results[0].password) {
         callback(null, true);
       } else {
         callback(null, false);
