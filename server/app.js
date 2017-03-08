@@ -21,9 +21,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Serve static files from ../public directory
 app.use(express.static(path.join(__dirname, '../public')));
 
+// Parse header cookies
+
+// Parse session
+
 app.get('/', 
 function(req, res) {
-  res.render('index');
+  res.render('login');
 });
 
 app.get('/create', 
